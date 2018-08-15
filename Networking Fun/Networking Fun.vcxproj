@@ -154,6 +154,7 @@
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="StateMachine.cpp" />
     <ClCompile Include="Text.cpp" />
+    <ClCompile Include="TextButton.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Title.cpp" />
     <ClCompile Include="UIContainer.cpp" />
@@ -175,6 +176,7 @@
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="StateMachine.h" />
     <ClInclude Include="Text.h" />
+    <ClInclude Include="TextButton.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Title.h" />
     <ClInclude Include="UIContainer.h" />

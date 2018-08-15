@@ -1,5 +1,6 @@
 #pragma once
 #include "GameState.h"
+#include "TextButton.h"
 class LobbyScreen :
 	public GameState
 {
@@ -10,5 +11,11 @@ public:
 
 	LobbyScreen(SDL_Renderer* renderer);
 	~LobbyScreen();
+
+private:
+
+	TextButton host_;
+	TextButton join_;
+
 };
 
