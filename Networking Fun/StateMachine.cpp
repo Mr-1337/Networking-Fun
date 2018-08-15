@@ -65,3 +65,8 @@ void StateMachine::update()
 	//std::cout << stateStack.size() << std::endl;
 	stateStack.top()->update();
 }
+
+void StateMachine::eventHandler()
+{
+	stateStack.top()->eventHandler();
+}

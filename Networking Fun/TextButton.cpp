@@ -8,12 +8,12 @@ TextButton::TextButton(SDL_Renderer* renderer, const char* text) :
 	text_ = new Text(m_renderer, text);
 	text_->load("Assets/Font/Halo3.ttf", 24, { 0,255,0,255 });
 	text_->getWidthHeight(&rect_.w, &rect_.h);
+	m_sprite.reset(text_);
 }
 
 
 TextButton::~TextButton()
 {
-	delete text_;
 }
 
 void TextButton::draw()

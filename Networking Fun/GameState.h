@@ -13,6 +13,7 @@ public:
 	virtual ~GameState();
 	virtual void update() = 0;
 	virtual void draw() = 0;
+	virtual void eventHandler();
 	virtual void revealed();
 
 	enum states
@@ -45,6 +46,7 @@ public:
 protected:
 	SDL_Renderer* m_renderer;
 	StateRequest request;
+	SDL_Event event_;
 
 };
 

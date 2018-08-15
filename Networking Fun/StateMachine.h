@@ -17,6 +17,7 @@ public:
 	GameState::StateRequest getStateRequest();
 	void update();
 	void draw();
+	void eventHandler();
 
 private:
 	std::stack <std::unique_ptr<GameState>> stateStack;

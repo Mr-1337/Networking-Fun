@@ -19,7 +19,5 @@ private:
 	SDL_Renderer* m_renderer;
 	SDL_Window* m_window;
 	StateMachine* stateMachine;
-
-	void eventHandler();
 	
 };

@@ -52,22 +52,11 @@ void GameEngine::appLoop()
 		if (stateMachine->getStateRequest().state != GameState::STATE_QUIT)
 		{
 			stateMachine->setState(stateMachine->getStateRequest());
-			eventHandler();
+			stateMachine->eventHandler();
 			stateMachine->update();
 			stateMachine->draw();
 		}
 		else
-		{
-			m_quit = true;
-		}
-	}
-}
-
-void GameEngine::eventHandler()
-{
-	while (SDL_PollEvent(&m_event) != 0)
-	{
-		if (m_event.type == SDL_QUIT)
 		{
 			m_quit = true;
 		}

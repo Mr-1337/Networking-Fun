@@ -22,3 +22,12 @@ GameState::StateRequest GameState::getStateRequest()
 {
 	return request;
 }
+
+void GameState::eventHandler()
+{
+	while (SDL_PollEvent(&event_))
+	{
+		if (event_.type == SDL_QUIT)
+			request.state = STATE_QUIT;
+	}
+}
