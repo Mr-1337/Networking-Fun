@@ -163,15 +163,7 @@ LobbyScreen::LobbyScreen(SDL_Renderer* renderer) :
 	if (!packet_)
 		std::cout << SDLNet_GetError() << std::endl;
 
-	std::string a;
-	std::cin >> a;
-	
-	int b = stringToIP(a);
-	std::cout << b << std::endl;
-	IPaddress test;
-	test.host = b;
-	test.port = 25570;
-	std::cout << ipToString(test) << std::endl;
+	//DO NOT HALT
 }
 
 
