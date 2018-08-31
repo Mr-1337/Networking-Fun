@@ -37,9 +37,9 @@ void LobbyScreen::update()
 			if (SDLNet_ResolveHost(&hostIP_, NULL, 25570))
 				std::cout << SDLNet_GetError() << std::endl;
 
-			server_ = SDLNet_TCP_Open(&hostIP_);
+			sock_ = SDLNet_UDP_Open(hostIP_.port);
 
-			if (server_ == NULL)
+			if (sock_ == NULL)
 				std::cout << SDLNet_GetError() << std::endl;
 
 			mode_ = 1;
@@ -48,24 +48,64 @@ void LobbyScreen::update()
 		else if (join_.click())
 		{
 
-			if (SDLNet_ResolveHost(&hostIP_, "localhost", 25570))
+			if (SDLNet_ResolveHost(&hostIP_, "192.168.86.208", 25570))
 				std::cout << SDLNet_GetError() << std::endl;
-			SDLNet_TCP_Open(&hostIP_);
+
+			std::cout << ipToString(hostIP_) << std::endl;
+
+			sock_ = SDLNet_UDP_Open(0);
+			if (sock_ == NULL)
+				std::cout << SDLNet_GetError() << std::endl;
+			packet_->address = hostIP_;
+			packet_->len = 6;
+			memcpy(packet_->data, "HELLO", packet_->len);
+			std::cout << "Attempting to send to " << packet_->address.host << " on port " << packet_->address.port << std::endl;
 			mode_ = 2;
+			std::cout << SDLNet_UDP_Send(sock_, -1, packet_) << std::endl;
 		}
 		break;
 	case 1:
-		client_ = SDLNet_TCP_Accept(server_);
-		if (client_ != NULL && !set)
+		packet_->len = 5;
+		if (SDLNet_UDP_Recv(sock_, packet_) > 0)
 		{
-			std::cout << "ESTABLISHED CONNECTION!!!" << std::endl;
-			set = true;
+			std::cout << "Received connection from " << packet_->address.host << " on port " << packet_->address.port << std::endl;
 		}
+		else if (SDLNet_UDP_Recv(sock_, packet_) < 0)
+			std::cout << SDLNet_GetError() << std::endl;
 		break;
 	case 2:
-
+		packet_->len = 5;
+		if (SDLNet_UDP_Recv(sock_, packet_) > 0)
+		{
+			std::cout << "Received connection from " << packet_->address.host << " on port " << packet_->address.port << std::endl;
+		}
+		else if (SDLNet_UDP_Recv(sock_, packet_) < 0)
+			std::cout << SDLNet_GetError() << std::endl;
 		break;
 	}
+}
+
+//Turn an SDLNet IP into a string
+std::string LobbyScreen::ipToString(IPaddress& ip)
+{
+	std::string s;
+	//IP
+	for (int i = 0; i < 4; i++)
+	{
+		s += std::to_string((ip.host >> (i*8)) & 255) + '.';
+	}
+	s.pop_back();
+	s += ":";
+	//PORT
+	s += std::to_string(((ip.port & 255) << 8) | ((ip.port >> 8) & 255));
+	return s;
+}
+
+int LobbyScreen::stringToIP(std::string ip)
+{
+	unsigned int host = 0;
+
+	return host;
 }
 
 void LobbyScreen::eventHandler()
@@ -74,7 +114,20 @@ void LobbyScreen::eventHandler()
 	{
 		if (e.type == SDL_KEYDOWN)
 		{
-			if (!chat_.empty() && e.key.keysym.sym == SDLK_BACKSPACE)
+			if (e.key.keysym.sym == SDLK_RETURN)
+			{
+				if (mode_ == 1)
+				{
+						
+				}
+				else if (mode_ == 2)
+				{
+ 					std::cout << SDLNet_UDP_Send(sock_, -1, packet_) << std::endl; 
+					std::cout << packet_->status << std::endl;
+				}
+ 			}
+
+			else if (!chat_.empty() && e.key.keysym.sym == SDLK_BACKSPACE)
 			{
 				chat_.pop_back();
 				if (!chat_.empty())
@@ -106,6 +159,19 @@ LobbyScreen::LobbyScreen(SDL_Renderer* renderer) :
 	host_.setX(200);
 	join_.setX(400);
 	mode_ = 0;
+	packet_ = SDLNet_AllocPacket(32);
+	if (!packet_)
+		std::cout << SDLNet_GetError() << std::endl;
+
+	std::string a;
+	std::cin >> a;
+	
+	int b = stringToIP(a);
+	std::cout << b << std::endl;
+	IPaddress test;
+	test.host = b;
+	test.port = 25570;
+	std::cout << ipToString(test) << std::endl;
 }
 
 

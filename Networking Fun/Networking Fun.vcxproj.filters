@@ -153,7 +153,7 @@
       <Filter>Header Files\GameStates</Filter>
     </ClInclude>
     <ClInclude Include="TextButton.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

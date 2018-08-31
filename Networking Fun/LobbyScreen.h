@@ -17,11 +17,16 @@ public:
 private:
 
 	IPaddress hostIP_;
-	TCPsocket server_;
-	TCPsocket client_;
+	UDPsocket sock_;
+
+	UDPpacket* packet_;
 
 	TextButton host_;
 	TextButton join_;
+
+	std::string ipToString(IPaddress& ip);
+	int stringToIP(std::string ip);
+
 	std::string chat_;
 	Text* chatUI_;
 	int mode_;
