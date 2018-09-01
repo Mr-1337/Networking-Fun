@@ -49,7 +49,7 @@ void LobbyScreen::update()
 		else if (join_.click())
 		{
 
-			if (SDLNet_ResolveHost(&hostIP_, "192.168.86.208", 25570))
+			if (SDLNet_ResolveHost(&hostIP_, "192.168.0.27", 25570))
 				std::cout << SDLNet_GetError() << std::endl;
 
 			std::cout << ipToString(hostIP_) << std::endl;
@@ -75,7 +75,7 @@ void LobbyScreen::update()
 		else if (result < 0)
 			std::cout << SDLNet_GetError() << std::endl;
 		else if (result == 0)
-			std::cout << "nothing to see here\n";
+			//std::cout << "nothing to see here\n";
 		break;
 	case 2:
 		packet_->len = 6;
@@ -87,7 +87,7 @@ void LobbyScreen::update()
 		else if (result < 0)
 			std::cout << SDLNet_GetError() << std::endl;
 		else if (result == 0)
-			std::cout << "nothing to see here\n";
+			//std::cout << "nothing to see here\n";
 		break;
 	}
 }
@@ -125,7 +125,8 @@ void LobbyScreen::eventHandler()
 			{
 				if (mode_ == 1)
 				{
-						
+					std::cout << SDLNet_UDP_Send(sock_, -1, packet_) << std::endl;
+					std::cout << packet_->status << std::endl;
 				}
 				else if (mode_ == 2)
 				{
