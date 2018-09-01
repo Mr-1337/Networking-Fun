@@ -28,6 +28,7 @@ void LobbyScreen::draw()
 void LobbyScreen::update()
 {
 	static bool set = false;
+	int result;
 	switch (mode_)
 	{
 	case 0:
@@ -65,22 +66,28 @@ void LobbyScreen::update()
 		}
 		break;
 	case 1:
-		packet_->len = 5;
-		if (SDLNet_UDP_Recv(sock_, packet_) > 0)
+		packet_->len = 6;
+		result = SDLNet_UDP_Recv(sock_, packet_);
+		if (result > 0)
 		{
 			std::cout << "Received connection from " << packet_->address.host << " on port " << packet_->address.port << std::endl;
 		}
-		else if (SDLNet_UDP_Recv(sock_, packet_) < 0)
+		else if (result < 0)
 			std::cout << SDLNet_GetError() << std::endl;
+		else if (result == 0)
+			std::cout << "nothing to see here\n";
 		break;
 	case 2:
-		packet_->len = 5;
-		if (SDLNet_UDP_Recv(sock_, packet_) > 0)
+		packet_->len = 6;
+		result = SDLNet_UDP_Recv(sock_, packet_);
+		if (result > 0)
 		{
 			std::cout << "Received connection from " << packet_->address.host << " on port " << packet_->address.port << std::endl;
 		}
-		else if (SDLNet_UDP_Recv(sock_, packet_) < 0)
+		else if (result < 0)
 			std::cout << SDLNet_GetError() << std::endl;
+		else if (result == 0)
+			std::cout << "nothing to see here\n";
 		break;
 	}
 }
